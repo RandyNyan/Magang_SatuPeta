@@ -30,7 +30,8 @@ class Manajemen_user_Controller extends Controller
             'nama' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'jabatan' => 'required|string',
+            'jabatan' => 'nullable|string',
+            'role' => 'required|string',
             'organisasi_id' => 'required|exists:organisasi,id',
         ]);
         // 2. Simpan data baru ke dalam tabel Users di database
@@ -46,6 +47,53 @@ class Manajemen_user_Controller extends Controller
 
         // 3. Setelah sukses menyimpan, lempar kembali user ke halaman tabel utama dengan pesan sukses
         return redirect()->route('manajemen.user')->with('success', 'User baru berhasil ditambahkan!');
+    }
+
+    public function edit(User $user)
+    {
+        return view('edit_user', compact('user'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8',
+            'jabatan' => 'nullable|string',
+            'organisasi_id' => 'required|exists:organisasi,id',
+            'role' => 'required|string',
+            'status' => 'required|string',
+        ]);
+
+        $data = [
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'jabatan' => $request->jabatan,
+            'organisasi_id' => $request->organisasi_id,
+            'role' => $request->role,
+            'status' => $request->status,
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        return redirect()->route('manajemen.user')->with('success', 'Data user berhasil diperbarui!');
+    }
+
+    public function destroy(User $user)
+    {
+        // Cegah user menghapus dirinya sendiri jika perlu
+        if (auth()->id() === $user->id) {
+            return redirect()->route('manajemen.user')->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+        }
+
+        $user->delete();
+
+        return redirect()->route('manajemen.user')->with('success', 'User berhasil dihapus!');
     }
 
 }

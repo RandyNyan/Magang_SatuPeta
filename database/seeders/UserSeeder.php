@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
                 'nama' => 'Walidata Demo',
                 'username' => 'walidata_demo',
                 'email' => 'walidata@jatimprov.go.id',
-                'password' => Hash::make('walidatademo123'),
+                'password' => Hash::make('password123'),
                 'nip' => '123',
                 'jabatan' => 'Walidata',
                 'role' => 'Walidata',

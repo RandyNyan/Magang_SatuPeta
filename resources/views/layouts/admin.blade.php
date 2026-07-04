@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - Satu Peta Jawa Timur</title>
+    <title>@yield('title') - Smart Facility Map</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     @stack('styles')
 </head>
@@ -14,9 +15,11 @@
         <div class="w-60 bg-white border-r border-gray-100 flex flex-col justify-between fixed h-full z-10">
             <div>
                 <div class="p-5 flex items-center space-x-2.5 border-b border-gray-50 relative">
-                    <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                        <span class="text-xl">🗺️</span>
-                        <div class="font-bold text-sm leading-tight text-blue-600">Satu Peta<br><span class="text-[10px] text-gray-500 font-normal">Jawa Timur</span></div>
+                    <a href="{{ route('manajemen.peta') }}" class="flex items-center space-x-2 transition hover:opacity-80">
+                        <svg class="h-8 w-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <span class="font-bold text-lg tracking-tight text-gray-800">Smart Facility Map</span>
                     </a>
                 </div>
 
@@ -29,11 +32,12 @@
                         <span>Manajemen Peta</span>
                     </a>
 
-                    <a href="{{ route('manajemen.open-layers') }}"
-                       class="flex items-center space-x-3 px-3 py-2 rounded-lg text-[13px] font-medium transition {{ request()->routeIs('manajemen.open-layers*') ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-500 hover:bg-gray-50' }}">
-                        <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+                    <a href="{{ route('manajemen.openlayer') }}"
+                       class="flex items-center space-x-3 px-3 py-2 rounded-lg text-[13px] font-medium transition {{ request()->routeIs('manajemen.openlayer*') ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-500 hover:bg-gray-50' }}">
+                        <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                         <span>Manajemen Open Layer</span>
                     </a>
+
 
                     <a href="{{ route('manajemen.user') }}"
                        class="flex items-center space-x-3 px-3 py-2 rounded-lg text-[13px] font-medium transition {{ request()->routeIs('manajemen.user*') ? 'bg-blue-50 text-blue-600 font-semibold' : 'text-gray-500 hover:bg-gray-50' }}">

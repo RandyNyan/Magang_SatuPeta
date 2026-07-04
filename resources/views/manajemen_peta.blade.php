@@ -5,8 +5,8 @@
 @section('content')
 <div class="space-y-4">
     <div>
-        <h2 class="text-xl font-bold text-gray-800 tracking-tight">Manajemen Peta & Mapset (MySQL)</h2>
-        <p class="text-xs text-gray-500">Kelola katalog mapset yang tersedia pada portal Satu Peta Jawa Timur.</p>
+        <h2 class="text-xl font-bold text-gray-800 tracking-tight">Manajemen Peta</h2>
+        <p class="text-xs text-gray-500">Kelola katalog mapset yang tersedia pada portal Smart Facility Map.</p>
     </div>
 
     <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
@@ -47,13 +47,13 @@
                     @forelse($maps as $map)
                     <tr class="hover:bg-gray-50/50 transition">
                         <td class="py-3 px-5 text-gray-900 font-semibold">
-                            {{ $map->judul_mapset }}
+                             {{ $map->judul_mapset }}
                         </td>
                         <td class="py-3 px-5 text-gray-500">
-                            {{ $map->kategori->nama_kategori ?? '-' }}
+                             {{ $map->kategori->nama_kategori ?? '-' }}
                         </td>
                         <td class="py-3 px-5 text-gray-500">
-                            {{ $map->organisasi->nama ?? '-' }}
+                             {{ $map->organisasi->nama ?? '-' }}
                         </td>
                         <td class="py-3 px-5">
                             <span class="px-2 py-0.5 border border-gray-200 bg-gray-50 rounded text-gray-600 text-[10px]">
@@ -61,13 +61,19 @@
                             </span>
                         </td>
                         <td class="py-3 px-5">
-                            @if($map->open_layer_id)
-                                <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-purple-100 text-purple-700">
-                                    PG: {{ $map->openLayer->nama_layer ?? 'Open Layer' }}
-                                </span>
+                            @if($map->sumber_peta === 'pgsql')
+                                @if($map->open_layer_id && $map->openLayer)
+                                    <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-green-100 text-green-700">
+                                        OL: {{ $map->openLayer->nama_layer }}
+                                    </span>
+                                @else
+                                    <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-purple-100 text-purple-700">
+                                        PGSQL: {{ $map->pgsql_table }}
+                                    </span>
+                                @endif
                             @else
                                 <span class="px-2 py-0.5 rounded text-[9px] font-bold bg-blue-100 text-blue-700">
-                                    WMS Server
+                                    WMS Link
                                 </span>
                             @endif
                         </td>

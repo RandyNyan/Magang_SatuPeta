@@ -9,6 +9,8 @@ class Organisasi extends Model
 {
     protected $table = 'organisasi';
 
+    public $timestamps = false;
+
     protected $fillable = [
         'nama',
         'deskripsi',
@@ -21,5 +23,10 @@ class Organisasi extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class, 'organisasi_id', 'id');
+    }
+
+    public function maps(): HasMany
+    {
+        return $this->hasMany(Maps::class, 'organisasi_id', 'id');
     }
 }

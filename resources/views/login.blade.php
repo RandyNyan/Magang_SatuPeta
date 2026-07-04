@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Satu Peta Jawa Timur</title>
+    <title>Login - Smart Facility Map</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
@@ -11,7 +12,7 @@
     <div class="flex min-h-screen">
 
         <div class="hidden md:flex w-1/2 bg-cover bg-center items-center justify-center p-12">
-            <img src="{{ asset('asset/ilustration-login.svg') }}" alt="Jawa Timur Illustration" class="max-w-full h-auto max-h-[85vh] rounded-lg shadow-lg object-contain">
+            <img src="{{ asset('asset/login_illustration.png') }}" alt="Smart Facility Map Illustration" class="max-w-full h-auto max-h-[85vh] rounded-lg shadow-lg object-contain">
         </div>
 
         <div class="w-full md:w-1/2 flex flex-col justify-center items-center px-6 py-12 bg-white">

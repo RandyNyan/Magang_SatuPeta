@@ -7,14 +7,55 @@ use Illuminate\Http\Request;
 
 class MapController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Tambahkan 'maps.organisasi' agar data relasi organisasi ikut diambil
-        $kategoris = Kategori::with(['maps.organisasi'])
-            ->withCount('maps')
-            ->having('maps_count', '>', 0)
-            ->get();
+        $search = $request->input('q');
 
-        return view('maps_view', compact('kategoris'));
+        // Tambahkan 'maps.organisasi' dan 'maps.openLayer'
+        $kategorisQuery = Kategori::with(['maps' => function($q) use ($search) {
+            if ($search) {
+                $q->where('judul_mapset', 'like', "%{$search}%")
+                  ->orWhere('deskripsi', 'like', "%{$search}%");
+            }
+            $q->with(['organisasi', 'openLayer']);
+        }])
+        ->whereHas('maps', function($q) use ($search) {
+            if ($search) {
+                $q->where('judul_mapset', 'like', "%{$search}%")
+                  ->orWhere('deskripsi', 'like', "%{$search}%");
+            }
+        })
+        ->withCount(['maps' => function($q) use ($search) {
+            if ($search) {
+                $q->where('judul_mapset', 'like', "%{$search}%")
+                  ->orWhere('deskripsi', 'like', "%{$search}%");
+            }
+        }]);
+
+        $kategoris = $kategorisQuery->get();
+
+        $organisasisQuery = \App\Models\Organisasi::with(['maps' => function($q) use ($search) {
+            if ($search) {
+                $q->where('judul_mapset', 'like', "%{$search}%")
+                  ->orWhere('deskripsi', 'like', "%{$search}%");
+            }
+            $q->with(['kategori', 'openLayer', 'organisasi']);
+        }])
+        ->whereHas('maps', function($q) use ($search) {
+            if ($search) {
+                $q->where('judul_mapset', 'like', "%{$search}%")
+                  ->orWhere('deskripsi', 'like', "%{$search}%");
+            }
+        })
+        ->withCount(['maps' => function($q) use ($search) {
+            if ($search) {
+                $q->where('judul_mapset', 'like', "%{$search}%")
+                  ->orWhere('deskripsi', 'like', "%{$search}%");
+            }
+        }]);
+
+        $organisasis = $organisasisQuery->get();
+
+        return view('maps_view', compact('kategoris', 'organisasis', 'search'));
     }
 }

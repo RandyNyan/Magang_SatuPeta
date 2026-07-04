@@ -4,20 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class OpenLayer extends Model
 {
     use HasFactory;
 
-    // Force connection to PostgreSQL
-    protected $connection = 'pgsql';
-
     protected $table = 'open_layers';
 
     protected $guarded = ['id'];
 
-    // Automatically serialize/deserialize geojson
     protected $casts = [
-        'geojson' => 'array',
+        'style_rules' => 'array',
     ];
+
+    public function maps(): HasMany
+    {
+        return $this->hasMany(Maps::class, 'open_layer_id');
+    }
 }
